@@ -1,0 +1,10 @@
+# Datensatz nicht versionieren (gross) — nur Struktur behalten
+data/*
+!data/.gitkeep
+
+# Python / venv / Notebook
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
