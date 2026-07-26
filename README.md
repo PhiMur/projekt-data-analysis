@@ -4,6 +4,21 @@ Projekt zum Kurs **Projekt: Data Analysis (DLBDSEDA02), Aufgabe 1**. Ziel: aus d
 des Münsteraner *Mängelmelders* (Open311-Bürgeranliegen) die am häufigsten angesprochenen Themen
 extrahieren und für die Stadtverwaltung aufbereiten.
 
+## Datensatz
+
+**Quelle:** Stadt Münster / Beteiligung NRW, Open311-Schnittstelle.
+**Lizenz:** Datenlizenz Deutschland Namensnennung 2.0 (DL-DE-BY-2.0).
+
+Zentrale Spalte ist der Freitext `description` (die eigentliche Bürgermeldung). `service_name` ist die
+von der Stadt vergebene Kategorie. Die Daten liegen lokal unter `data/muenster_maengelmelder.csv`
+(per `.gitignore` von der Versionierung ausgenommen) und werden mit dem Abruf-Skript erzeugt:
+
+```bash
+python scripts/01_fetch_muenster_maengelmelder.py
+```
+Das Skript ruft die Open311-API monatsweise ab (behandelt das 1000-Treffer-Limit pro Aufruf) und
+schreibt die CSV.
+
 ## Geplante Pipeline (aus dem Konzept)
 
 1. Daten laden & sichten (`pandas`)
@@ -17,11 +32,14 @@ extrahieren und für die Stadtverwaltung aufbereiten.
 ## Einrichtung
 
 ```bash
+# 1. Virtuelle Umgebung anlegen und aktivieren
 python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-```
+.venv\Scripts\activate        # Windows
+# source .venv/bin/activate   # Linux/macOS
 
-Der Datensatz (Mängelmelder Münster, Open311-Schnittstelle) wird als nächster Schritt mit einem
-Abruf-Skript beschafft. Die Daten selbst bleiben lokal unter `data/` und werden nicht versioniert
-(`.gitignore`).
+# 2. Abhängigkeiten installieren
+pip install -r requirements.txt
+
+# 3. Datensatz beschaffen (erzeugt data/muenster_maengelmelder.csv)
+python scripts/01_fetch_muenster_maengelmelder.py
+```

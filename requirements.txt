@@ -6,3 +6,6 @@ matplotlib
 jupyter
 notebook
 ipykernel
+
+# Datenbeschaffung (scripts/01_fetch_muenster_maengelmelder.py):
+requests
