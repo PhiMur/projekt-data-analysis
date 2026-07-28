@@ -9,11 +9,9 @@ Hinweis: Der Endpunkt liefert max. 1000 Datensaetze pro Aufruf und filtert nach
          Datumsbereich. Deshalb wird Monat fuer Monat abgefragt. Erreicht ein Monat
          das Limit doch einmal, gibt das Skript eine Warnung aus.
 
-Einmal ausfuehren, um data/muenster_maengelmelder.csv zu erzeugen. Die Analyse
+Einmal ausfuehren, um data/muenster_maengelmelder.csv zu erzeugen. Das Notebook
 liest danach nur diese lokale Datei (reproduzierbar, kein erneuter API-Zugriff noetig).
 """
-
-
 import csv
 import datetime as dt
 from pathlib import Path
@@ -24,14 +22,14 @@ BASE = ("https://beteiligung.nrw.de/api/rest/public/open311/v2/"
         "beteiligung/1003255/requests.json")
 CAP = 1000                       # Server-Limit pro Aufruf
 START = dt.date(2022, 1, 1)      # Fensteranfang (anpassbar)
-END = dt.date(2026, 7, 10)       # Abrufstand der CSV (10.07.2026), eingefroren,
-                                 # damit ein erneuter Lauf denselben Korpus ergibt.
+END = dt.date(2026, 7, 9)        # Fensterende = letzter vollstaendiger Kalendertag.
+                                 # Eingefroren, damit ein erneuter Abruf moeglichst denselben
+                                 # Korpus (17.659 Meldungen) liefert wie die dokumentierte Analyse.
 OUT = Path(__file__).resolve().parents[1] / "data" / "muenster_maengelmelder.csv"
 
 FIELDS = ["service_request_id", "requested_datetime", "service_name",
           "status", "description", "address", "zipcode", "lat", "long",
           "status_notes"]
-
 
 
 def month_ranges(start, end):
