@@ -17,19 +17,39 @@ von der Stadt vergebene Kategorie. Die Daten liegen lokal unter `data/muenster_m
 python scripts/01_fetch_muenster_maengelmelder.py
 ```
 Das Skript ruft die Open311-API monatsweise ab (behandelt das 1000-Treffer-Limit pro Aufruf) und
-schreibt die CSV.
+schreibt die CSV. Das Abruf-Fenster ist im Skript auf den Analysestand eingefroren (bis 09.07.2026),
+damit ein erneuter Abruf möglichst denselben Korpus ergibt wie die dokumentierte Analyse. Ein Hinweis
+dazu: Das Portal veröffentlicht Meldungen erst nach Moderation. Ein späterer Abruf kann darum auch im
+gleichen Fenster geringfügig mehr Meldungen enthalten, wodurch sich die Kennzahlen und die
+Themenzusammensetzung leicht verschieben können.
 
-## Geplante Pipeline (aus dem Konzept)
+## Pipeline (Notebook `notebooks/analysis.ipynb`)
 
 1. Daten laden & sichten (`pandas`)
-2. Vorverarbeitung zu „sauberen Texten“: Kleinschreibung, Bereinigung (`re`),
+2. Vorverarbeitung zu „sauberen Texten“: Kleinschreibung, Bereinigung (`re`, Umlaute bleiben erhalten),
    Tokenisierung + deutsche Stoppwörter (`nltk`), Wortnormalisierung mit `nltk` `SnowballStemmer('german')`
 3. Vektorisierung mit zwei Verfahren: Bag-of-Words + TF-IDF (`scikit-learn`)
 4. Kurzvergleich der beiden Vektorisierungen
 5. Themenextraktion mit zwei Verfahren: LSA + LDA (`scikit-learn`: `TruncatedSVD`, `LatentDirichletAllocation`)
 6. Darstellung & Diskussion (Top-Wörter je Thema als Balkendiagramm, `matplotlib`)
 
-## Einrichtung
+## Ergebnisse (Kurzfassung)
+
+Das LDA-Modell (k = 8) findet mehrere gut benennbare Themen: illegale Müllentsorgung/Sperrmüll
+(der häufigste Grund), Müllablagerungen rund um Container, Schrotträder, Ampeln und Kreuzungen sowie
+Rattenmeldungen. Ein Thema mischt Bäume/Äste mit defekten Straßenlaternen, zwei Themen bleiben diffus
+(vor allem Orts- und Richtungsbeschreibungen). Der Abgleich mit den amtlichen Kategorien
+(`service_name`, nie Modell-Input) zeigt Übereinstimmung in den Kernen: die dominante Kategorie
+„Illegale Abfallablagerung“ spiegelt sich in zwei Themen, Schrotträder und Ampeln finden ihre Kategorie
+wieder. Eine 1:1-Zuordnung entsteht nicht, weil die amtliche Taxonomie feiner ist als k = 8. Im Vergleich
+liefert LDA besser interpretierbare Themen als LSA, dessen Komponenten stärker überlappen. Die Themenzahl
+k wurde durch Erproben mehrerer Werte (5 / 8 / 12) nach Interpretierbarkeit gewählt. Eine ergänzend
+berechnete Themenkohärenz (einfache UMass-Variante) stützt die Einschätzung an den Rändern: klar
+benennbare Themen erreichen die besten Werte, das Mischthema den schwächsten.
+
+## So führst du das Projekt aus
+
+Entwickelt und getestet mit **Python 3.14** (funktioniert ebenso mit Python 3.11–3.13).
 
 ```bash
 # 1. Virtuelle Umgebung anlegen und aktivieren
@@ -42,4 +62,19 @@ pip install -r requirements.txt
 
 # 3. Datensatz beschaffen (erzeugt data/muenster_maengelmelder.csv)
 python scripts/01_fetch_muenster_maengelmelder.py
+
+# 4. (Optional) NLTK-Daten vorab laden, das Notebook macht das beim Lauf auch selbst
+python -c "import nltk; [nltk.download(p, quiet=True) for p in ('punkt','punkt_tab','stopwords')]"
+
+# 5. Notebook starten und vollständig ausführen
+jupyter notebook notebooks/analysis.ipynb
 ```
+
+## Reproduzierbarkeit
+
+`requirements.txt` benennt alle benötigten Pakete, bewusst ohne Versions-Pins, damit die Installation
+auch auf aktuellen Python-Versionen funktioniert. Entwickelt und geprüft wurde mit pandas 3.0.3,
+scikit-learn 1.9.0, nltk 3.10.0 und matplotlib 3.11.0 unter Python 3.14. Das Notebook läuft von oben
+nach unten ohne manuelle Zwischenschritte durch (die NLTK-Daten werden zur Laufzeit geladen). Geprüft mit `pruefe_repro.py`
+(im übergeordneten Arbeitsordner): frische venv + `pip install -r requirements.txt` +
+`nbconvert --execute` → Notebook läuft fehlerfrei durch.

@@ -1,4 +1,5 @@
-# NLP-Themenextraktion (IU DLBDSEDA02, Aufgabe 1)
+# NLP-Themenextraktion (IU DLBDSEDA02, Aufgabe 1) — battle-tested Stack
+# Kern (Pflicht): das Notebook laeuft damit vollstaendig von oben nach unten durch.
 pandas
 nltk
 scikit-learn
@@ -9,3 +10,7 @@ ipykernel
 
 # Datenbeschaffung (scripts/01_fetch_muenster_maengelmelder.py):
 requests
+
+# Optional (nur Zusatz-Visualisierung; koennen auf sehr neuen Python-Versionen Wheel-/Build-
+# Probleme machen und wuerden dann den Kern-Install mitreissen -> bei Bedarf einzeln nachziehen):
+#   pip install wordcloud pyldavis
