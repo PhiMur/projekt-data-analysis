@@ -47,15 +47,14 @@ k wurde durch Erproben mehrerer Werte (5 / 8 / 12) nach Interpretierbarkeit gew�
 berechnete Themenkohärenz (einfache UMass-Variante) stützt die Einschätzung an den Rändern: klar
 benennbare Themen erreichen die besten Werte, das Mischthema den schwächsten.
 
-## So führst du das Projekt aus
+## So führen Sie das Projekt aus
 
 Entwickelt und getestet mit **Python 3.14** (funktioniert ebenso mit Python 3.11–3.13).
 
 ```bash
 # 1. Virtuelle Umgebung anlegen und aktivieren
 python -m venv .venv
-.venv\Scripts\activate        # Windows
-# source .venv/bin/activate   # Linux/macOS
+.venv\Scripts\activate   # Windows
 
 # 2. Abhängigkeiten installieren
 pip install -r requirements.txt
