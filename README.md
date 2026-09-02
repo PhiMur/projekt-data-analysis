@@ -45,7 +45,7 @@ wichtigsten Wörtern (Wortstämme, daher verkürzt):
 - Thema 5 (Bäume und Äste): baum, ast, gross, war, gehweg
 - Thema 6 (Schrotträder): gehweg, haus, fahrrad, schrottrad, rad
 - Thema 7 (Ratten, Laternen, Wasser): strass, ratt, latern, viel, wass
-- Thema 8 (Sperrmüll und Container): mull, sperrmull, viel, illegal, leid
+- Thema 8 (Sperrmüll und illegale Ablagerung): mull, sperrmull, viel, illegal, leid
 
 Der häufigste Beschwerdegrund ist die illegale Müllentsorgung, sie prägt die Themen 1 und 8. Der
 Abgleich mit den amtlichen Kategorien (`service_name`, nie Modell-Input) zeigt Übereinstimmung in den
@@ -59,7 +59,8 @@ Interpretierbarkeit der Themen und der Themenkohärenz (einfache UMass-Variante)
 Kennzahl. Die mittlere Kohärenz liegt bei -121.5 (k = 5), -126.4 (k = 8) und -128.2 (k = 12), die
 Kennzahl bevorzugt also knapp wenige Themen. Der Abstand ist klein, und bei k = 5 geht der Bereich
 Schrotträder in einem großen Straßen- und Fahrrad-Thema unter, obwohl er mit über 1.000 Meldungen eine
-der größten amtlichen Kategorien ist. Gewählt wurde deshalb k = 8. Zusätzlich weist das Notebook die
+der größten amtlichen Kategorien ist. Bei k = 12 zersplittert der Müll dagegen auf drei Themen, und das
+schwächste Thema fällt deutlich ab. Gewählt wurde deshalb k = 8. Zusätzlich weist das Notebook die
 Kohärenz einzeln je Thema aus.
 
 ## So führen Sie das Projekt aus
