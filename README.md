@@ -35,17 +35,32 @@ Themenzusammensetzung leicht verschieben können.
 
 ## Ergebnisse (Kurzfassung)
 
-Das LDA-Modell (k = 8) findet mehrere gut benennbare Themen: illegale Müllentsorgung/Sperrmüll
-(der häufigste Grund), Müllablagerungen rund um Container, Schrotträder, Ampeln und Kreuzungen sowie
-Rattenmeldungen. Ein Thema mischt Bäume/Äste mit defekten Straßenlaternen, zwei Themen bleiben diffus
-(vor allem Orts- und Richtungsbeschreibungen). Der Abgleich mit den amtlichen Kategorien
-(`service_name`, nie Modell-Input) zeigt Übereinstimmung in den Kernen: die dominante Kategorie
-„Illegale Abfallablagerung“ spiegelt sich in zwei Themen, Schrotträder und Ampeln finden ihre Kategorie
-wieder. Eine 1:1-Zuordnung entsteht nicht, weil die amtliche Taxonomie feiner ist als k = 8. Im Vergleich
-liefert LDA besser interpretierbare Themen als LSA, dessen Komponenten stärker überlappen. Die Themenzahl
-k wurde durch Erproben mehrerer Werte (5 / 8 / 12) nach Interpretierbarkeit gewählt. Eine ergänzend
-berechnete Themenkohärenz (einfache UMass-Variante) stützt die Einschätzung an den Rändern: klar
-benennbare Themen erreichen die besten Werte, das Mischthema den schwächsten.
+Das LDA-Modell (k = 8) findet mehrere gut benennbare Themen. Übersicht mit den jeweils fünf
+wichtigsten Wörtern (Wortstämme, daher verkürzt):
+
+- Thema 1 (Müllsäcke und wilde Entsorgung): entsorgt, wurd, mullsack, mull, sack
+- Thema 2 (Straßen- und Radwegschäden): strass, radweg, gefahr, viel, schlagloch
+- Thema 3 (Ampeln und Kreuzungen): ampel, recht, hoh, richtung, kreuzung
+- Thema 4 (ohne klares Thema, Orts- und Lageangaben): strass, str, stell, kreuzung, warendorf
+- Thema 5 (Bäume und Äste): baum, ast, gross, war, gehweg
+- Thema 6 (Schrotträder): gehweg, haus, fahrrad, schrottrad, rad
+- Thema 7 (Ratten, Laternen, Wasser): strass, ratt, latern, viel, wass
+- Thema 8 (Sperrmüll und Container): mull, sperrmull, viel, illegal, leid
+
+Der häufigste Beschwerdegrund ist die illegale Müllentsorgung, sie prägt die Themen 1 und 8. Der
+Abgleich mit den amtlichen Kategorien (`service_name`, nie Modell-Input) zeigt Übereinstimmung in den
+Kernen: die dominante Kategorie „Illegale Abfallablagerung“ spiegelt sich in zwei Themen, Schrotträder
+und Ampeln finden ihre Kategorie wieder. Eine 1:1-Zuordnung entsteht nicht, weil die amtliche Taxonomie
+feiner ist als k = 8. Im Vergleich liefert LDA besser interpretierbare Themen als LSA, dessen Komponenten
+stärker überlappen.
+
+Die Themenzahl k wurde an den Werten 5, 8 und 12 erprobt und nach zwei Kriterien festgelegt: der
+Interpretierbarkeit der Themen und der Themenkohärenz (einfache UMass-Variante) als nachrechenbarer
+Kennzahl. Die mittlere Kohärenz liegt bei -121.5 (k = 5), -126.4 (k = 8) und -128.2 (k = 12), die
+Kennzahl bevorzugt also knapp wenige Themen. Der Abstand ist klein, und bei k = 5 geht der Bereich
+Schrotträder in einem großen Straßen- und Fahrrad-Thema unter, obwohl er mit über 1.000 Meldungen eine
+der größten amtlichen Kategorien ist. Gewählt wurde deshalb k = 8. Zusätzlich weist das Notebook die
+Kohärenz einzeln je Thema aus.
 
 ## So führen Sie das Projekt aus
 
